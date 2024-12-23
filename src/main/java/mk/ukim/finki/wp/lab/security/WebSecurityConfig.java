@@ -33,11 +33,11 @@ public class WebSecurityConfig {
                         .hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
-                        .loginPage("/login")
+
                         .defaultSuccessUrl("/songs", true) // Redirect to /songs on successful login
                         .permitAll())
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
+
                         .clearAuthentication(true)
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
