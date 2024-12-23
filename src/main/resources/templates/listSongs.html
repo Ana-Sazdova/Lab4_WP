@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Songs Homepage - Welcome to My Music Store</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+<header>
+    <h1>Welcome to My Music Store</h1>
+</header>
+<main>
+    <h2>Choose a song:</h2>
+    <form th:method="POST" th:action="@{/songs}">
+        <table>
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Release Year</th>
+                <th>Album</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="song : ${songs}">
+                <td>
+                    <input type="radio" name="songRadio" th:id="${song.getId()}" th:value="${song.getId()}">
+                </td>
+                <td th:text="${song.getTitle()}"></td>
+                <td th:text="${song.getGenre()}"></td>
+                <td th:text="${song.getReleaseYear()}"></td>
+                <td th:text="${song.getAlbum().getName()}"></td>
+                <td>
+                    <a th:href="@{/songs/edit-form/{id}(id=${song.getId()})}" sec:authorize="hasRole('ADMIN')" >Edit</a>
+
+                </td>
+                <td>
+                    <a th:href="@{/songs/delete/{id}(id=${song.getId()})}" sec:authorize="hasRole('ADMIN')" >Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/songs/add-form" sec:authorize="hasRole('ADMIN')" >Add New Song</a>
+    </form>
+</main>
+</body>
+</html>
